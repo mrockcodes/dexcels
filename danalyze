@@ -1,0 +1,18 @@
+import openpyxl
+from openpyxl.styles import Font
+
+def analyze_excel_data(file_path):
+    wb = openpyxl.load_workbook(file_path)
+    sheet = wb.active
+    total_sum = 0
+    for cell in sheet['A']:
+        if isinstance(cell.value, (int, float)):
+            total_sum += cell.value
+    sheet['B1'] = "Total Sum"
+    sheet['B2'] = total_sum
+    sheet['B1'].font = Font(bold=True)
+    wb.save(file_path)
+    print("Analysis complete. Results saved to Excel file.")
+
+file_path = "example.xlsx"
+analyze_excel_data(file_path)
